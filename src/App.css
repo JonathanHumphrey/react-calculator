@@ -1,0 +1,17 @@
+.App {
+  text-align: center;
+}
+
+.button-container{
+  justify-content: center;
+  display: flex;
+  margin: 0;
+  
+}
+.keypad {
+  
+}
+.operators{
+  display: flex;
+  flex-direction: column;
+}
