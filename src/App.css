@@ -1,17 +1,42 @@
 .App {
-  text-align: center;
+	text-align: center;
 }
-
-.button-container{
-  justify-content: center;
-  display: flex;
-  margin: 0;
-  
+.button-container {
+	justify-content: center;
+	display: flex;
+	margin: 0;
 }
-.keypad {
-  
+.operators {
+	display: flex;
+	flex-direction: column;
 }
-.operators{
-  display: flex;
-  flex-direction: column;
+.button {
+	width: 50px;
+	height: 30px;
+	border-radius: 15px;
+	background-color: aqua;
+	margin-bottom: 2px;
+}
+.operatorButtonTop {
+	border: 1px solid white;
+	margin-bottom: 5px;
+	width: 33%;
+	background-color: rgb(245, 32, 85);
+}
+.operatorButtonSide {
+	border: 1px solid white;
+	height: 20%;
+	margin-left: 5px;
+	background-color: rgb(189, 189, 189);
+}
+.input {
+	border-radius: 25px;
+	height: 25px;
+	border: solid black;
+}
+.button0 {
+	width: 66%;
+}
+.buttonDot {
+	width: 33%;
 }

@@ -1,82 +1,64 @@
-import React, { useState} from 'react'
-import './App.css';
+import React, { useState } from "react";
+import * as math from "mathjs";
+import "./App.css";
 
-import Display from './Components/Display'
-import Numbers from './Components/Numbers'
+import Display from "./Components/Display";
+import Numbers from "./Components/Numbers";
 
 function App() {
-  
-  const [number, getNumber] = useState(0);
-  let [expression, setExpression] = useState([]);
-  const [storedNumber, setStoredNumber] = useState('')
+	let [number, updateNumber] = useState(" ");
+	let [positive, setPositive] = useState(true);
 
-  let input, operatorFlag, result
+	const getNumber = (value) => {
+		if (number === 0) {
+			updateNumber((number = value));
+		} else {
+			updateNumber(number + value);
+		}
+	};
 
-  const setNumber = (value) => {
-    setExpression([...expression, value])
-      input = getNumber(value);
-      handleSetStoredNumber(value)
-  }
-  
-  function handleOperator(value) {
-    setExpression([...expression, value])
+	const getOperatorFlag = (e) => {
+		if (e.target.value === "=") {
+			handleResult();
+		} else if (e.target.value === "true") {
+			handlePos();
+			if (!positive) {
+				updateNumber(-+number);
+			}
+		} else {
+			updateNumber(number + e.target.value);
+		}
+	};
 
-    if (value === '+') {
-      operatorFlag = 'plus'
-      console.log(operatorFlag)
-    }
-    else if (value === '-') {
-      operatorFlag = 'minus'
-      console.log(operatorFlag)
-    }
-    else if (value === 'x') {
-      operatorFlag = 'multiply'
-      console.log(operatorFlag)
-    }
-    else if (value === '÷') {
-      operatorFlag = 'divide'
-      console.log(operatorFlag)
-    }
-  }
+	const handleResult = () => {
+		updateNumber(math.evaluate(number).toFixed(3));
+	};
 
-  function handleResult (){
-    console.log(operatorFlag)
-    if (operatorFlag === 'plus') {
-      result = storedNumber + input
-      console.log(result)
-    }
-  }
+	const clearNumbers = () => {
+		updateNumber(" ");
+	};
+	const handlePos = () => {
+		if (positive) {
+			setPositive(!positive);
+		}
+	};
 
-  function clearNumbers(value) {
-    console.log('poops')
-    input = ' '
-    setStoredNumber(' ')
-
-  }
-
-  const handleSetStoredNumber = (value) => {
-    setStoredNumber(value)
-    getNumber('')
-  }
-  
-  return (
-    <div className="App">
-      <div className='calc-header'>
-        <Display
-          number={number}
-          expression={expression}
-        />
-      </div>
-      <div className='calc-body'>
-        <Numbers
-          setNumber={setNumber}
-          handleResult={handleResult}
-          handleOperator={handleOperator}
-          clearNumbers={clearNumbers}
-        />
-      </div>
-    </div>
-  );
+	return (
+		<div className="App">
+			<h1>Calculate!</h1>
+			<div className="calc-header">
+				<Display number={number} />
+			</div>
+			<div className="calc-body">
+				<Numbers
+					getNumber={getNumber}
+					handleResult={handleResult}
+					getOperatorFlag={getOperatorFlag}
+					clearNumbers={clearNumbers}
+				/>
+			</div>
+		</div>
+	);
 }
 
 export default App;
